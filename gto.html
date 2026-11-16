@@ -16,17 +16,17 @@
 <p class="status" style="margin-top:22px">Data source: ESPN public league read endpoint · League ID 430139 · Season 2026. No ESPN password or private cookie is used.</p>
 </main></div></div>
 <script>
-const API='https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2026/segments/0/leagues/430139?view=mSettings&view=mTeam&view=mStandings&view=mMatchup';
+const API='https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2026/segments/0/leagues/430139?view=mSettings&view=mTeam&view=mStandings&view=mMatchup&view=mMembers';
 const $=id=>document.getElementById(id);
 const safe=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function teamName(t){return t.name||[t.location,t.nickname].filter(Boolean).join(' ')||t.abbrev||'Team '+t.id}
-function managerName(t){const o=t.owners;return Array.isArray(o)?o.map(x=>typeof x==='string'?x:(x.displayName||x.firstName||'')).filter(Boolean).join(', '):typeof o==='string'?o:(o?.displayName||'—')}
+function managerName(t,members){let owners=t.owners||[];if(!Array.isArray(owners))owners=[owners];const names=owners.map(owner=>{const id=typeof owner==='string'?owner:String(owner?.id??'');const member=members[id]||(typeof owner==='object'?owner:null);if(!member)return '';return member.displayName||[member.firstName,member.lastName].filter(Boolean).join(' ')||member.username||'';}).filter(Boolean);return names.join(', ')||'Manager name unavailable'}
 function record(t){const r=t.record?.overall||t.record||{};return [r.wins??0,r.losses??0,r.ties??0].join('-')}
 function points(t,key){const v=t.pointsFor??t.record?.overall?.[key];return Number.isFinite(Number(v))?Number(v).toFixed(2):'—'}
 function render(data){
- const ts=data.teams||[];const byId=Object.fromEntries(ts.map(t=>[t.id,t]));
+ const ts=data.teams||[];const byId=Object.fromEntries(ts.map(t=>[t.id,t]));const members=Object.fromEntries((Array.isArray(data.members)?data.members:Object.values(data.members||{})).map(m=>[String(m.id),m]));
  const sorted=[...ts].sort((a,b)=>(a.playoffSeed||99)-(b.playoffSeed||99)||(b.record?.overall?.wins||0)-(a.record?.overall?.wins||0)||(b.pointsFor||0)-(a.pointsFor||0));
- $('standings').innerHTML=sorted.length?sorted.map((t,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+safe(teamName(t))+'</strong></td><td>'+safe(managerName(t))+'</td><td class="num">'+safe(record(t))+'</td><td class="num">'+safe(points(t,'pointsFor'))+'</td><td class="num">'+safe(Number(t.pointsAgainst??t.record?.overall?.pointsAgainst??NaN).toFixed?.(2)??'—')+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">ESPN returned no teams for this season.</td></tr>';
+ $('standings').innerHTML=sorted.length?sorted.map((t,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+safe(teamName(t))+'</strong></td><td>'+safe(managerName(t,members))+'</td><td class="num">'+safe(record(t))+'</td><td class="num">'+safe(points(t,'pointsFor'))+'</td><td class="num">'+safe(Number(t.pointsAgainst??t.record?.overall?.pointsAgainst??NaN).toFixed?.(2)??'—')+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">ESPN returned no teams for this season.</td></tr>';
  $('teams').innerHTML=ts.length?ts.map(t=>'<article class="panel"><div class="kicker">FRANCHISE '+safe(t.id)+'</div><h3>'+safe(teamName(t))+'</h3><div class="muted">'+safe(managerName(t))+'</div><div class="team"><span>Record</span><strong>'+safe(record(t))+'</strong></div><div class="team"><span>Points for</span><strong>'+safe(points(t,'pointsFor'))+'</strong></div></article>').join(''):'<div class="panel empty">No team data available.</div>';
  const schedule=data.schedule||[];const current=data.status?.currentMatchupPeriod||data.status?.latestScoringPeriod||null;
  const games=schedule.filter(g=>!current||g.matchupPeriodId===current);
