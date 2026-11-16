@@ -75,7 +75,7 @@
   </section>
   <section class="page" id="teams">
    <div class="masthead"><div><div class="kicker">Meet the competition</div><h1>Teams & managers</h1><div class="muted">Manager names confirmed manually · Rosters still awaiting Yahoo.</div></div></div>
-   <div class="teamgrid" id="teamCards"></div><div class="panel" id="teamDetail" style="margin-top:14px"><div class="empty">Select a team to open its profile.</div></div>
+   <div class="panel" style="overflow-x:auto"><table><thead><tr><th>#</th><th>TEAM</th><th>MANAGER</th></tr></thead><tbody id="teamRows"></tbody></table></div><div class="panel" id="teamDetail" style="margin-top:14px"><div class="empty">Select a team to open its profile.</div></div>
   </section>
   <section class="page" id="playoffs">
    <div class="masthead"><div><div class="kicker">Six teams. One champion.</div><h1>Playoff picture</h1><div class="muted">Milby Football League · 2026 postseason format</div></div></div>
@@ -118,7 +118,7 @@ const matchup=(m,compact=false)=>'<div class="'+(compact?'scorecard':'match')+(m
 document.getElementById('homeScores').innerHTML=matchupData.slice(0,3).map(m=>matchup(m,true)).join('');
 document.getElementById('allScores').innerHTML=matchupData.map(m=>matchup(m,false)).join('');
 document.getElementById('standingsRows').innerHTML=standingsData.map((row,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+row[0]+'</strong></td><td class="num">'+row[1]+'</td><td><span class="tag">'+row[4]+'</span></td><td class="num">'+row[2]+'</td><td class="num">'+row[3]+'</td><td class="num">'+row[5]+'</td><td class="num">'+row[6]+'</td></tr>').join('');
-document.getElementById('teamCards').innerHTML=teams.map((n,i)=>'<button type="button" class="teamtile" data-team="'+i+'" onclick="showTeam('+i+')"><small>FRANCHISE '+String(i+1).padStart(2,'0')+'</small><strong>'+n+'</strong><em>Manager: '+managers[i]+'</em></button>').join('');
+document.getElementById('teamRows').innerHTML=teams.map((n,i)=>'<tr onclick="showTeam('+i+')" style="cursor:pointer"><td>'+(i+1)+'</td><td><strong>'+n+'</strong></td><td>'+managers[i]+'</td></tr>').join('');
 function showTeam(i){const row=standingsData[i];document.getElementById('teamDetail').innerHTML='<div class="sectiontag">FRANCHISE PROFILE</div><h2>'+teams[i]+'</h2><div class="statrow"><span>Manager</span><b>'+managers[i]+'</b></div><div class="statrow"><span>Record</span><b>'+row[1]+'</b></div><div class="statrow"><span>Current streak</span><b>'+row[4]+'</b></div><div class="statrow"><span>Points for</span><b>'+row[2]+'</b></div><div class="statrow"><span>Points against</span><b>'+row[3]+'</b></div><div class="statrow"><span>FAAB budget</span><b>'+row[5]+'</b></div><div class="statrow"><span>Waiver priority</span><b>'+row[6]+'</b></div><div class="empty">Roster and player statistics will be added in a later step.</div>';}
 function showPage(page,label){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('[data-page]').forEach(b=>b.classList.remove('active'));const target=document.getElementById(page);const nav=document.querySelector('[data-page="'+page+'"]');if(target)target.classList.add('active');if(nav)nav.classList.add('active');const crumb=document.getElementById('crumb');if(crumb)crumb.textContent=label;window.scrollTo(0,0);}
 </script>
