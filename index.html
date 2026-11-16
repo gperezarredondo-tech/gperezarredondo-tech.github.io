@@ -34,6 +34,7 @@
   <button type="button" data-page="scores" onclick="showPage('scores','SCOREBOARD')">▤ <span>Scoreboard</span></button>
   <button type="button" data-page="standings" onclick="showPage('standings','STANDINGS')">♜ <span>Standings</span></button>
   <button type="button" data-page="teams" onclick="showPage('teams','TEAMS')">♟ <span>Teams</span></button>
+  <button type="button" data-page="playoffs" onclick="showPage('playoffs','PLAYOFFS')">🏆 <span>Playoffs</span></button>
   <button type="button" data-page="history" onclick="showPage('history','LEAGUE HISTORY')">◷ <span>League History</span></button>
  </nav>
  <div class="sidefoot">MILBY FOOTBALL LEAGUE<br>12-TEAM LEAGUE NETWORK<br><span style="color:var(--maize)">BUILT FOR THE LEAGUE.</span></div>
@@ -74,6 +75,31 @@
   <section class="page" id="teams">
    <div class="masthead"><div><div class="kicker">Meet the competition</div><h1>Teams & managers</h1><div class="muted">Manager names confirmed manually · Rosters still awaiting Yahoo.</div></div></div>
    <div class="teamgrid" id="teamCards"></div><div class="panel" id="teamDetail" style="margin-top:14px"><div class="empty">Select a team to open its profile.</div></div>
+  </section>
+  <section class="page" id="playoffs">
+   <div class="masthead"><div><div class="kicker">Six teams. One champion.</div><h1>Playoff picture</h1><div class="muted">Milby Football League · 2026 postseason format</div></div></div>
+   <div class="leadgrid">
+    <article class="lead"><div class="sectiontag">THE ROAD TO THE TITLE</div><h2>THE TOP SIX<br>MAKE THE TOURNAMENT.</h2><p>The top two seeds earn first-round byes. Seeds 3, 4, and 5 qualify by regular-season standings. The final spot goes to the highest-scoring team among places 6 through 12.</p><span class="tag" style="width:max-content;background:#244d69">6-TEAM PLAYOFF</span></article>
+    <aside class="sidefeature"><div><div class="sectiontag">SEEDING ADVANTAGE</div><h3>The No. 1 seed gets to choose their bracket in the tournament.</h3><small>First-place finish comes with bracket-selection rights.</small></div><div class="big">#1</div></aside>
+   </div>
+   <div class="sectionhead"><h2>How teams qualify</h2><span>LEAGUE RULES</span></div>
+   <div class="panel">
+    <div class="statrow"><span><b>Seeds 1–2</b> · Top two teams in standings</span><b>First-round bye</b></div>
+    <div class="statrow"><span><b>Seeds 3–5</b> · Next three teams by standings</span><b>Automatic bids</b></div>
+    <div class="statrow"><span><b>Seed 6</b> · Highest points for among teams ranked 6–12</span><b>Wildcard</b></div>
+    <div class="statrow"><span><b>No. 1 seed</b> · Chooses their bracket in the tournament</span><b>Bracket choice</b></div>
+   </div>
+   <div class="sectionhead"><h2>Current projected field</h2><span>BASED ON MANUAL STANDINGS SNAPSHOT</span></div>
+   <div class="panel">
+    <div class="notice">This is a projection using the standings snapshot entered November 16, 2026, not a finalized playoff field.</div>
+    <div class="statrow"><span><b>#1 Nochinges</b> · 7–2</span><b>Bye</b></div>
+    <div class="statrow"><span><b>#2 Goffy Goobers</b> · 7–2</span><b>Bye</b></div>
+    <div class="statrow"><span><b>#3 Mean Machine</b> · 6–3</span><b>Standings</b></div>
+    <div class="statrow"><span><b>#4 DONKEYS</b> · 5–4</span><b>Standings</b></div>
+    <div class="statrow"><span><b>#5 Ghost Backfield</b> · 5–4</span><b>Standings</b></div>
+    <div class="statrow"><span><b>#6 ICEMEN</b> · 1,592.76 PF</span><b>Wildcard</b></div>
+    <small class="muted">ICEMEN currently has the most points for among teams ranked 6–12, making them the projected wildcard under this rule.</small>
+   </div>
   </section>
   <section class="page" id="history">
    <div class="masthead"><div><div class="kicker">Tradition starts here</div><h1>League history</h1><div class="muted">Champions, records, and moments worth remembering.</div></div></div>
