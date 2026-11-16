@@ -83,7 +83,8 @@
 </div>
 </div>
 <script>
-const standingsData=[["Nochinges","7-2-0","1610.30"],["Goffy Goobers","7-2-0","1505.58"],["Mean Machine","6-3-0","1503.92"],["DONKEYS","5-4-0","1664.76"],["Ghost Backfield","5-4-0","1589.24"],["King","5-4-0","1542.94"],["Perc Angle","5-4-0","1499.82"],["ICEMEN","4-5-0","1592.76"],["lon run it 2x","4-5-0","1461.18"],["🪦 2026 🪦","3-6-0","1397.40"],["The Replacement Hurts","2-7-0","1426.38"],["Shut it down","1-8-0","1340.98"]];\nconst teams=standingsData.map(row=>row[0]);
+const standingsData=[["Nochinges","7-2-0","1610.30"],["Goffy Goobers","7-2-0","1505.58"],["Mean Machine","6-3-0","1503.92"],["DONKEYS","5-4-0","1664.76"],["Ghost Backfield","5-4-0","1589.24"],["King","5-4-0","1542.94"],["Perc Angle","5-4-0","1499.82"],["ICEMEN","4-5-0","1592.76"],["lon run it 2x","4-5-0","1461.18"],["🪦 2026 🪦","3-6-0","1397.40"],["The Replacement Hurts","2-7-0","1426.38"],["Shut it down","1-8-0","1340.98"]];
+const teams=standingsData.map(row=>row[0]);
 const matchup=(i,compact=false)=>'<div class="'+(compact?'scorecard':'match')+'"><div class="scoretop"><span>WEEKLY MATCHUP '+(i+1)+'</span><span class="tag">NOT IMPORTED</span></div><div class="scoreteam"><span><i class="teamcrest">'+String(i*2+1).padStart(2,'0')+'</i>'+teams[i*2]+'</span><b class="score">—</b></div><div class="scoreteam"><span><i class="teamcrest">'+String(i*2+2).padStart(2,'0')+'</i>'+teams[i*2+1]+'</span><b class="score">—</b></div><div class="pending">AWAITING YAHOO MATCHUP DATA</div></div>';
 document.getElementById('homeScores').innerHTML=Array.from({length:3},(_,i)=>matchup(i,true)).join('');
 document.getElementById('allScores').innerHTML=Array.from({length:6},(_,i)=>matchup(i,false)).join('');
