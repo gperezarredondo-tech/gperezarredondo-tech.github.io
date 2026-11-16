@@ -16,7 +16,7 @@
 <p class="status" style="margin-top:22px">Data source: ESPN public league read endpoint · League ID 430139 · Season 2026. No ESPN password or private cookie is used.</p>
 </main></div></div>
 <script>
-const API='https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2026/segments/0/leagues/430139?view=mSettings&view=mTeam&view=mStandings&view=mMatchup&view=mMembers';
+const API='https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2026/segments/0/leagues/430139?view=mSettings&view=mTeam&view=mStandings&view=mMatchupScore&view=mMembers';
 const $=id=>document.getElementById(id);
 const safe=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function teamName(t){return t.name||[t.location,t.nickname].filter(Boolean).join(' ')||t.abbrev||'Team '+t.id}
