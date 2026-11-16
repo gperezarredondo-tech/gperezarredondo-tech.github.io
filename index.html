@@ -60,7 +60,7 @@
      <div class="statrow"><span>League size</span><b>12 teams</b></div><div class="statrow"><span>Platform</span><b>Yahoo Fantasy</b></div><div class="statrow"><span>Buy-in</span><b>$200</b></div><div class="statrow"><span>Live data</span><b>Pending approval</b></div>
     </div></section>
    </div>
-   <div class="notice">This is the new sports-network presentation. Matchup scores, standings, team names, and player statistics remain placeholders until Yahoo API access is approved and connected.</div>
+   <div class="notice">Standings manually entered from your Yahoo screenshot on November 16, 2026. Matchup pairings, scores, and player statistics are still awaiting import.</div>
   </section>
   <section class="page" id="scores">
    <div class="masthead"><div><div class="kicker">Every game. Every point.</div><h1>League scoreboard</h1><div class="muted">The weekly head-to-head board.</div></div></div>
@@ -68,8 +68,8 @@
    <div class="matchgrid" id="allScores"></div>
   </section>
   <section class="page" id="standings">
-   <div class="masthead"><div><div class="kicker">The race for the crown</div><h1>League standings</h1><div class="muted">The table will update with Yahoo results.</div></div></div>
-   <div class="panel"><div class="sectionhead" style="margin-top:0"><h2>2026 table</h2><span>12 CLUBS</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">PF</th><th class="num">PA</th></tr></thead><tbody id="standingsRows"></tbody></table></div></div>
+   <div class="masthead"><div><div class="kicker">The race for the crown</div><h1>League standings</h1><div class="muted">Manual standings snapshot · November 16, 2026</div></div></div>
+   <div class="panel"><div class="sectionhead" style="margin-top:0"><h2>2026 table</h2><span>MANUAL SNAPSHOT · NOV 16, 2026</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Team</th><th class="num">W-L-T</th><th class="num">PF</th></tr></thead><tbody id="standingsRows"></tbody></table></div></div>
   </section>
   <section class="page" id="teams">
    <div class="masthead"><div><div class="kicker">Meet the competition</div><h1>Teams & managers</h1><div class="muted">Team identities and rosters will load from Yahoo.</div></div></div>
@@ -83,11 +83,11 @@
 </div>
 </div>
 <script>
-const teams=Array.from({length:12},(_,i)=>'Team '+String(i+1).padStart(2,'0'));
+const standingsData=[["Nochinges","7-2-0","1610.30"],["Goffy Goobers","7-2-0","1505.58"],["Mean Machine","6-3-0","1503.92"],["DONKEYS","5-4-0","1664.76"],["Ghost Backfield","5-4-0","1589.24"],["King","5-4-0","1542.94"],["Perc Angle","5-4-0","1499.82"],["ICEMEN","4-5-0","1592.76"],["lon run it 2x","4-5-0","1461.18"],["🪦 2026 🪦","3-6-0","1397.40"],["The Replacement Hurts","2-7-0","1426.38"],["Shut it down","1-8-0","1340.98"]];\nconst teams=standingsData.map(row=>row[0]);
 const matchup=(i,compact=false)=>'<div class="'+(compact?'scorecard':'match')+'"><div class="scoretop"><span>WEEKLY MATCHUP '+(i+1)+'</span><span class="tag">NOT IMPORTED</span></div><div class="scoreteam"><span><i class="teamcrest">'+String(i*2+1).padStart(2,'0')+'</i>'+teams[i*2]+'</span><b class="score">—</b></div><div class="scoreteam"><span><i class="teamcrest">'+String(i*2+2).padStart(2,'0')+'</i>'+teams[i*2+1]+'</span><b class="score">—</b></div><div class="pending">AWAITING YAHOO MATCHUP DATA</div></div>';
 document.getElementById('homeScores').innerHTML=Array.from({length:3},(_,i)=>matchup(i,true)).join('');
 document.getElementById('allScores').innerHTML=Array.from({length:6},(_,i)=>matchup(i,false)).join('');
-document.getElementById('standingsRows').innerHTML=teams.map((n,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+n+'</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>').join('');
+document.getElementById('standingsRows').innerHTML=standingsData.map((row,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+row[0]+'</strong></td><td class="num">'+row[1]+'</td><td class="num">'+row[2]+'</td></tr>').join('');
 document.getElementById('teamCards').innerHTML=teams.map((n,i)=>'<button type="button" class="teamtile" data-team="'+i+'" onclick="showTeam('+i+')"><small>FRANCHISE '+String(i+1).padStart(2,'0')+'</small><strong>'+n+'</strong><em>Roster awaiting Yahoo import →</em></button>').join('');
 function showTeam(i){document.getElementById('teamDetail').innerHTML='<div class="sectiontag">FRANCHISE PROFILE</div><h2>'+teams[i]+'</h2><div class="empty">Manager details, season record, roster, and player statistics will appear after Yahoo authorization.</div>';}
 function showPage(page,label){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('[data-page]').forEach(b=>b.classList.remove('active'));const target=document.getElementById(page);const nav=document.querySelector('[data-page="'+page+'"]');if(target)target.classList.add('active');if(nav)nav.classList.add('active');const crumb=document.getElementById('crumb');if(crumb)crumb.textContent=label;window.scrollTo(0,0);}
