@@ -139,14 +139,14 @@ const teams=standingsData.map(row=>row[0]);
 const managers=["Eric Armenta","Francisco Perez","Gabriel Perez","Noe Hinojosa","Eduardo Trevino","Reynaldo Maturey","Charlie Avila","Fredrick Terrell","Alberto Hinojosa","Rolando Gutierrez","Ricardo Sanchez","Adrian Sorola"];
 document.querySelectorAll(".powerrow").forEach(el=>{const nm=el.querySelector("strong")?.textContent;const d=el.querySelector("div");if(d){const s=document.createElement("small");s.className="champ-odds";s.textContent="Championship chance: "+fmtOdds(titleOdds[nm]||0)+"%";d.appendChild(s);}});
 const matchupData=[
-{"a":"Mean Machine","am":"Gabriel","ar":"6-4-0","as":"145.64","ap":"163.82","b":"Ghost Backfield","bm":"Eduardo","br":"6-4-0","bs":"199.16","bp":"146.23"},
-{"a":"Shut it down","am":"Adrian","ar":"1-9-0","as":"161.06","ap":"169.92","b":"Ion run it 2x","bm":"Alberto","br":"5-5-0","bs":"214.80","bp":"171.15"},
-{"a":"ICEMEN","am":"The Fred","ar":"5-5-0","as":"211.32","ap":"182.34","b":"DONKEYS","bm":"Noe","br":"5-5-0","bs":"120.28","bp":"175.64"},
-{"a":"Goffy Goobers","am":"Francisco","ar":"8-2-0","as":"221.44","ap":"176.04","b":"The Replacement Hurts","bm":"Ricardo","br":"2-8-0","bs":"124.72","bp":"142.57"},
-{"a":"🪦 2026 🪦","am":"Rolando","ar":"3-7-0","as":"134.10","ap":"152.78","b":"Perc Angle","bm":"Charlie","br":"6-4-0","bs":"194.24","bp":"161.73"},
-{"a":"King","am":"Reynaldo","ar":"5-5-0","as":"149.52","ap":"174.63","b":"Nochinges","bm":"Eric","br":"8-2-0","bs":"221.54","bp":"173.00","featured":true}
-];
-const matchup=(m,compact=false)=>'<div class="'+(compact?'scorecard':'match')+(m.featured?' featured':'')+'">'+(m.featured?'<div class="sectiontag">MATCHUP OF THE WEEK</div>':'')+'<div class="scoretop"><span>WEEK 10 FINAL</span><span class="tag">'+(m.featured?'FEATURED':'FINAL')+'</span></div>'+[['a','am','ar','as','ap'],['b','bm','br','bs','bp']].map(k=>'<div class="scoreteam"><span><strong>'+m[k[0]]+'</strong><small class="manager">'+m[k[1]]+' · '+m[k[2]]+'</small></span><span class="scorebox"><b class="score">'+m[k[3]]+'</b><small>Proj. '+m[k[4]]+'</small></span></div>').join('')+'</div>';
+{"a":"Mean Machine","am":"Gabriel","ar":"6-4-0","as":"0.00","ap":"156.36","b":"Nochinges","bm":"Eric","br":"8-2-0","bs":"0.00","bp":"181.03","featured":true},
+{"a":"Goffy Goobers","am":"Francisco","ar":"8-2-0","as":"0.00","ap":"180.46","b":"ICEMEN","bm":"The Fred","br":"5-5-0","bs":"0.00","bp":"168.04"},
+{"a":"Ghost Backfield","am":"Eduardo","ar":"6-4-0","as":"0.00","ap":"9.57","b":"Shut it down","bm":"Adrian","br":"1-9-0","bs":"0.00","bp":"165.89"},
+{"a":"The Replacement Hurts","am":"Ricardo","ar":"2-8-0","as":"0.00","ap":"147.55","b":"🪦 2026 🪦","bm":"Rolando","br":"3-7-0","bs":"0.00","bp":"129.63"},
+{"a":"Ion run it 2x","am":"Alberto","ar":"5-5-0","as":"0.00","ap":"167.09","b":"Perc Angle","bm":"Charlie","br":"6-4-0","bs":"0.00","bp":"171.32"},
+{"a":"King","am":"Reynaldo","ar":"5-5-0","as":"0.00","ap":"151.05","b":"DONKEYS","bm":"Noe","br":"5-5-0","bs":"0.00","bp":"150.62"}
+];;
+const matchup=(m,compact=false)=>'<div class="'+(compact?'scorecard':'match')+(m.featured?' featured':'')+'">'+(m.featured?'<div class="sectiontag">MATCHUP OF THE WEEK</div>':'')+'<div class="scoretop"><span>WEEK 11 · UPCOMING</span><span class="tag">'+(m.featured?'FEATURED':'UPCOMING')+'</span></div>'+[['a','am','ar','as','ap'],['b','bm','br','bs','bp']].map(k=>'<div class="scoreteam"><span><strong>'+m[k[0]]+'</strong><small class="manager">'+m[k[1]]+' · '+m[k[2]]+'</small></span><span class="scorebox"><b class="score">'+m[k[3]]+'</b><small>Proj. '+m[k[4]]+'</small></span></div>').join('')+'</div>';
 document.getElementById('homeScores').innerHTML=matchupData.slice(0,3).map(m=>matchup(m,true)).join('');
 document.getElementById('allScores').innerHTML=matchupData.map(m=>matchup(m,false)).join('');
 document.getElementById('standingsRows').innerHTML=standingsData.map((row,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+row[0]+'</strong></td><td class="num">'+row[1]+'</td><td><span class="tag">'+row[4]+'</span></td><td class="num">'+row[2]+'</td><td class="num">'+row[3]+'</td><td class="num">'+row[5]+'</td><td class="num">'+row[6]+'</td><td class="num">'+fmtOdds(titleOdds[row[0]]||0)+'%</td></tr>').join('');
