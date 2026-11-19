@@ -66,8 +66,12 @@
    <div class="notice">Standings manually entered from your Yahoo screenshot on November 16, 2026. Matchup pairings, scores, and player statistics are still awaiting import.</div>
   </section>
   <section class="page" id="scores">
-   <div class="masthead"><div><div class="kicker">Every game. Every point.</div><h1>League scoreboard</h1><div class="muted">Week 10 · Scores and projections transcribed from your Yahoo screenshots.</div></div></div>
-   <div class="notice">Manually entered from your Yahoo screenshots. The lower projected figure is shown separately from the current score.</div>
+   <div class="masthead"><div><div class="kicker">Every game. Every point.</div><h1>League scoreboard</h1><div class="muted" id="scoreWeekSubtitle">Week 11 · Upcoming matchups</div></div></div>
+   <div style="display:flex;gap:10px;margin:0 0 16px;flex-wrap:wrap">
+    <button type="button" class="button primary" id="week11Tab" onclick="switchScoreWeek(11)">Week 11 · Upcoming</button>
+    <button type="button" class="button" id="week10Tab" onclick="switchScoreWeek(10)">Week 10 · Final results</button>
+   </div>
+   <div class="notice" id="scoreWeekNotice">Week 11 matchups. Current scores are 0.00; projected scores are shown separately.</div>
    <div class="matchgrid" id="allScores"></div>
   </section>
   <section class="page" id="power">
@@ -145,10 +149,27 @@ const matchupData=[
 {"a":"The Replacement Hurts","am":"Ricardo","ar":"2-8-0","as":"0.00","ap":"147.55","b":"🪦 2026 🪦","bm":"Rolando","br":"3-7-0","bs":"0.00","bp":"129.63"},
 {"a":"Ion run it 2x","am":"Alberto","ar":"5-5-0","as":"0.00","ap":"167.09","b":"Perc Angle","bm":"Charlie","br":"6-4-0","bs":"0.00","bp":"171.32"},
 {"a":"King","am":"Reynaldo","ar":"5-5-0","as":"0.00","ap":"151.05","b":"DONKEYS","bm":"Noe","br":"5-5-0","bs":"0.00","bp":"150.62"}
-];;
-const matchup=(m,compact=false)=>'<div class="'+(compact?'scorecard':'match')+(m.featured?' featured':'')+'">'+(m.featured?'<div class="sectiontag">MATCHUP OF THE WEEK</div>':'')+'<div class="scoretop"><span>WEEK 11 · UPCOMING</span><span class="tag">'+(m.featured?'FEATURED':'UPCOMING')+'</span></div>'+[['a','am','ar','as','ap'],['b','bm','br','bs','bp']].map(k=>'<div class="scoreteam"><span><strong>'+m[k[0]]+'</strong><small class="manager">'+m[k[1]]+' · '+m[k[2]]+'</small></span><span class="scorebox"><b class="score">'+m[k[3]]+'</b><small>Proj. '+m[k[4]]+'</small></span></div>').join('')+'</div>';
+];
+const week10Data=[
+{"a":"Mean Machine","am":"Gabriel","ar":"6-4-0","as":"145.64","ap":"163.82","b":"Ghost Backfield","bm":"Eduardo","br":"6-4-0","bs":"199.16","bp":"146.23"},
+{"a":"Shut it down","am":"Adrian","ar":"1-9-0","as":"161.06","ap":"169.92","b":"Ion run it 2x","bm":"Alberto","br":"5-5-0","bs":"214.80","bp":"171.15"},
+{"a":"ICEMEN","am":"The Fred","ar":"5-5-0","as":"211.32","ap":"182.34","b":"DONKEYS","bm":"Noe","br":"5-5-0","bs":"120.28","bp":"175.64"},
+{"a":"Goffy Goobers","am":"Francisco","ar":"8-2-0","as":"221.44","ap":"176.04","b":"The Replacement Hurts","bm":"Ricardo","br":"2-8-0","bs":"124.72","bp":"142.57"},
+{"a":"🪦 2026 🪦","am":"Rolando","ar":"3-7-0","as":"134.10","ap":"152.78","b":"Perc Angle","bm":"Charlie","br":"6-4-0","bs":"194.24","bp":"161.73"},
+{"a":"King","am":"Reynaldo","ar":"5-5-0","as":"149.52","ap":"174.63","b":"Nochinges","bm":"Eric","br":"8-2-0","bs":"221.54","bp":"173.00","featured":true}
+];
+const matchup=(m,compact=false,week=11)=>'<div class="'+(compact?'scorecard':'match')+(m.featured?' featured':'')+'">'+(m.featured?'<div class="sectiontag">MATCHUP OF THE WEEK</div>':'')+'<div class="scoretop"><span>WEEK '+week+(week===10?' · FINAL':' · UPCOMING')+'</span><span class="tag">'+(week===10?'FINAL':(m.featured?'FEATURED':'UPCOMING'))+'</span></div>'+[['a','am','ar','as','ap'],['b','bm','br','bs','bp']].map(k=>'<div class="scoreteam"><span><strong>'+m[k[0]]+'</strong><small class="manager">'+m[k[1]]+' · '+m[k[2]]+'</small></span><span class="scorebox"><b class="score">'+m[k[3]]+'</b><small>Proj. '+m[k[4]]+'</small></span></div>').join('')+'</div>';
+function switchScoreWeek(week){
+ const data=week===10?week10Data:matchupData;
+ document.getElementById('scoreWeekSubtitle').textContent=week===10?'Week 10 · Final results':'Week 11 · Upcoming matchups';
+ document.getElementById('scoreWeekNotice').textContent=week===10?'Completed Week 10 results. Final scores and original projections are preserved.':'Week 11 matchups. Current scores are 0.00; projected scores are shown separately.';
+ document.getElementById('week10Tab').className='button'+(week===10?' primary':'');
+ document.getElementById('week11Tab').className='button'+(week===11?' primary':'');
+ document.getElementById('allScores').innerHTML=data.map(m=>matchup(m,false,week)).join('');
+}
+'<div class="'+(compact?'scorecard':'match')+(m.featured?' featured':'')+'">'+(m.featured?'<div class="sectiontag">MATCHUP OF THE WEEK</div>':'')+'<div class="scoretop"><span>WEEK 11 · UPCOMING</span><span class="tag">'+(m.featured?'FEATURED':'UPCOMING')+'</span></div>'+[['a','am','ar','as','ap'],['b','bm','br','bs','bp']].map(k=>'<div class="scoreteam"><span><strong>'+m[k[0]]+'</strong><small class="manager">'+m[k[1]]+' · '+m[k[2]]+'</small></span><span class="scorebox"><b class="score">'+m[k[3]]+'</b><small>Proj. '+m[k[4]]+'</small></span></div>').join('')+'</div>';
 document.getElementById('homeScores').innerHTML=matchupData.slice(0,3).map(m=>matchup(m,true)).join('');
-document.getElementById('allScores').innerHTML=matchupData.map(m=>matchup(m,false)).join('');
+switchScoreWeek(11);
 document.getElementById('standingsRows').innerHTML=standingsData.map((row,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+row[0]+'</strong></td><td class="num">'+row[1]+'</td><td><span class="tag">'+row[4]+'</span></td><td class="num">'+row[2]+'</td><td class="num">'+row[3]+'</td><td class="num">'+row[5]+'</td><td class="num">'+row[6]+'</td><td class="num">'+fmtOdds(titleOdds[row[0]]||0)+'%</td></tr>').join('');
 document.getElementById('teamRows').innerHTML=teams.map((n,i)=>'<tr onclick="showTeam('+i+')" style="cursor:pointer"><td>'+(i+1)+'</td><td><strong>'+n+'</strong></td><td>'+managers[i]+'</td></tr>').join('');
 function showTeam(i){const row=standingsData[i];document.getElementById('teamDetail').innerHTML='<div class="sectiontag">FRANCHISE PROFILE</div><h2>'+teams[i]+'</h2><div class="statrow"><span>Manager</span><b>'+managers[i]+'</b></div><div class="statrow"><span>Record</span><b>'+row[1]+'</b></div><div class="statrow"><span>Current streak</span><b>'+row[4]+'</b></div><div class="statrow"><span>Points for</span><b>'+row[2]+'</b></div><div class="statrow"><span>Points against</span><b>'+row[3]+'</b></div><div class="statrow"><span>FAAB budget</span><b>'+row[5]+'</b></div><div class="statrow"><span>Waiver priority</span><b>'+row[6]+'</b></div><div class="empty">Roster and player statistics will be added in a later step.</div>';}
